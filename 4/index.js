@@ -1,16 +1,26 @@
 const { input } = require("../input");
 
-const checkPair = (pair) => {
+// first half of puzzle
+const checkFullOverlap = (pair) => {
   if (
     (pair[0][0] >= pair[1][0] && pair[0][1] <= pair[1][1]) ||
     (pair[1][0] >= pair[0][0] && pair[1][1] <= pair[0][1])
-  ) {
-    console.log(`true ${pair[0]} - ${pair[1]}`);
+  )
     return true;
-  } else {
-    // console.log(`false ${pair[0]} - ${pair[1]}`);
-    return false;
-  }
+
+  return false;
+};
+
+const checkForAnyOverLap = (pair) => {
+  if (
+    (pair[0][0] >= pair[1][0] && pair[0][0] <= pair[1][0]) ||
+    (pair[0][1] >= pair[1][0] && pair[0][1] <= pair[1][1]) ||
+    (pair[1][0] >= pair[0][0] && pair[1][0] <= pair[0][1]) ||
+    (pair[1][1] >= pair[0][0] && pair[1][1] <= pair[0][1])
+  )
+    return true;
+
+  return false;
 };
 
 const main = async () => {
@@ -24,9 +34,13 @@ const main = async () => {
   );
 
   console.log("total pairs:", pairs.length);
+  // first half of puzzle
+  const fullRangeOverlap = pairs.filter((pair) => checkFullOverlap(pair));
+  console.log("within a range: ", fullRangeOverlap.length);
 
-  const sameRange = pairs.filter((pair) => checkPair(pair));
-  console.log("within a range: ", sameRange.length);
+  const anyRangeOverlap = pairs.filter((pair) => checkForAnyOverLap(pair));
+  console.log("any overlap in:", anyRangeOverlap.length);
+  // second half of puzzle
 };
 
 main();
