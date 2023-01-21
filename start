@@ -1,0 +1,11 @@
+#first arg represent day
+day=$1
+
+#if not between 1 and 25, exit
+if [ $day -lt 1 ] || [ $day -gt 25 ]; then
+    echo "Day must be between 1 and 25"
+    exit 1
+fi
+
+#run node day/index.js
+node $day/index.js
